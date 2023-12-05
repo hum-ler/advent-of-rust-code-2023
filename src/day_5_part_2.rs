@@ -1,12 +1,14 @@
 use super::day_5_part_1::*;
 
+use rayon::prelude::*;
+
 use std::ops::Range;
 
 pub fn run(input: &str) -> i64 {
     let (seeds, map_chain) = parse_input(input);
 
     expand_seeds(seeds)
-        .into_iter()
+        .into_par_iter()
         .map(|range| find_range_location_min(range, &map_chain))
         .min()
         .unwrap()
@@ -27,7 +29,7 @@ fn expand_seeds(seeds: Vec<i64>) -> Vec<Range<i64>> {
 
 fn find_range_location_min(range: Range<i64>, map_chain: &MapChain<i64>) -> i64 {
     range
-        .into_iter()
+        .into_par_iter()
         .map(|seed| map_chain.map(Some(seed)).unwrap())
         .min()
         .unwrap()
