@@ -6,6 +6,8 @@ mod day_3_part_1;
 mod day_3_part_2;
 mod day_4_part_1;
 mod day_4_part_2;
+mod day_5_part_1;
+mod day_5_part_2;
 
 fn main() {
     {
@@ -31,6 +33,12 @@ fn main() {
         println!("-- Day 4 --");
         println!(" Part 1: {}", day_4_part_1::run(&day_4_input));
         println!(" Part 1: {}", day_4_part_2::run(&day_4_input));
+    }
+    {
+        let day_5_input = input("input/day-5.txt");
+        println!("-- Day 5 --");
+        println!(" Part 1: {}", day_5_part_1::run(&day_5_input));
+        println!(" Part 2: {}", day_5_part_2::run(&day_5_input));
     }
 }
 
