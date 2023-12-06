@@ -1,6 +1,6 @@
-use regex::Regex;
+use crate::clean_lines;
 
-pub fn run(input: &str) -> u32 {
+pub(crate) fn run(input: &str) -> u32 {
     let test = Combo {
         red: 12,
         green: 13,
@@ -35,10 +35,7 @@ pub(crate) struct Combo {
 }
 
 pub(crate) fn parse_input(input: &str) -> Vec<Game> {
-    input
-        .lines()
-        .map(str::trim)
-        .filter(|token| !token.is_empty())
+    clean_lines(input)
         .map(|token| parse_game(token))
         .collect::<Vec<Game>>()
 }
@@ -46,32 +43,36 @@ pub(crate) fn parse_input(input: &str) -> Vec<Game> {
 fn parse_game(input: &str) -> Game {
     let (game_part, combos_part) = input.split_once(':').unwrap();
 
-    let game_regex = Regex::new("Game (?<id>[0-9]+)").unwrap();
-    let game_captures = game_regex.captures(game_part).unwrap();
-    let game_id = game_captures["id"].parse::<u32>().unwrap();
+    let game_id = game_part
+        .trim()
+        .split(' ')
+        .skip(1)
+        .collect::<Vec<&str>>()
+        .first()
+        .unwrap()
+        .parse::<u32>()
+        .unwrap();
 
-    let game_combo = combos_part
+    let game_combos = combos_part
         .split(';')
         .map(|token| parse_combo(token))
         .collect::<Vec<Combo>>();
 
     Game {
         id: game_id,
-        combos: game_combo,
+        combos: game_combos,
     }
 }
 
 fn parse_combo(input: &str) -> Combo {
     let mut combo = Combo::default();
 
-    let combo_regex = Regex::new("(?<count>[0-9]+) (?<color>(red|green|blue))").unwrap();
-
-    let combo_fragments = input.split(", ");
+    let combo_fragments = input.trim().split(", ");
     for fragment in combo_fragments {
-        let combo_captures = combo_regex.captures(fragment).unwrap();
+        let (count_part, color_part) = fragment.split_once(' ').unwrap();
 
-        let count = combo_captures["count"].parse::<u32>().unwrap();
-        match &combo_captures["color"] {
+        let count = count_part.parse::<u32>().unwrap();
+        match color_part {
             "red" => combo.red = count,
             "green" => combo.green = count,
             "blue" => combo.blue = count,

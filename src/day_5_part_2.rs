@@ -1,10 +1,10 @@
-use super::day_5_part_1::*;
+use crate::day_5_part_1::*;
 
 use rayon::prelude::*;
 
 use std::ops::Range;
 
-pub fn run(input: &str) -> i64 {
+pub(crate) fn run(input: &str) -> i64 {
     let (seeds, map_chain) = parse_input(input);
 
     expand_seeds(seeds)

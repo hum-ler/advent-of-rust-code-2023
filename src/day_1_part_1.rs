@@ -1,8 +1,7 @@
-pub fn run(input: &str) -> u32 {
-    input
-        .lines()
-        .map(str::trim)
-        .filter(|token| !token.is_empty())
+use crate::clean_lines;
+
+pub(crate) fn run(input: &str) -> u32 {
+    clean_lines(input)
         .map(|token| find_calibration_value(token))
         .sum::<u32>()
 }
@@ -10,7 +9,6 @@ pub fn run(input: &str) -> u32 {
 fn find_calibration_value(input: &str) -> u32 {
     let digits = input.matches(char::is_numeric).collect::<Vec<&str>>();
 
-    // Should panic if digits is empty or parsing fails.
     let first_digit = digits[0].parse::<u32>().unwrap();
     let last_digit = digits[digits.len() - 1].parse::<u32>().unwrap();
 

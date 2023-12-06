@@ -1,17 +1,12 @@
-pub fn run(input: &str) -> u32 {
-    let lines = input
-        .lines()
-        .map(str::trim)
-        .filter(|token| !token.is_empty())
-        .collect::<Vec<&str>>();
+use crate::clean_lines;
+
+pub(crate) fn run(input: &str) -> u32 {
+    let lines = clean_lines(input).collect::<Vec<&str>>();
 
     // Get the dimensions for calculating ranges later.
     let (width, height) = get_size(&lines);
 
-    let (symbols, numbers) = input
-        .lines()
-        .map(str::trim)
-        .filter(|token| !token.is_empty())
+    let (symbols, numbers) = clean_lines(input)
         .enumerate()
         .map(|(index, token)| parse_line(index, token))
         .fold((vec![], vec![]), |mut acc, (symbols, numbers)| {
@@ -23,7 +18,7 @@ pub fn run(input: &str) -> u32 {
     let mut acc = 0;
     for (row, number_vec) in numbers.iter().enumerate() {
         for number in number_vec {
-            // Form a box around the number, so row +/- 1.
+            // Form a box around the number, so row +/- 1, except for first or last row.
             let row_range = match row {
                 0 => 0..=1,
                 last_row if last_row == height - 1 => last_row - 1..=last_row,
@@ -35,6 +30,7 @@ pub fn run(input: &str) -> u32 {
             }
         }
     }
+
     acc
 }
 
@@ -65,15 +61,14 @@ pub(crate) fn parse_line(row: usize, input: &str) -> (Vec<Symbol>, Vec<Number>) 
     let mut symbols = vec![];
     let mut numbers = vec![];
 
-    let _ = (String::from(".") + input) // prepend a '.' to make window nicer to work with
+    (String::from(".") + input) // prepend a '.' to make window nicer to work with
         .chars()
         .collect::<Vec<char>>()
         .windows(2)
         .enumerate()
-        .map(|(column, pair)| {
+        .for_each(|(column, pair)| {
             match pair[1] {
                 '0'..='9' => {
-                    // Handle a digit.
                     let value = pair[1].to_digit(10).unwrap();
 
                     // Check if this is a continuation from the previous digit.
@@ -109,14 +104,13 @@ pub(crate) fn parse_line(row: usize, input: &str) -> (Vec<Symbol>, Vec<Number>) 
                     value: pair[1],
                 }),
             }
-        })
-        .collect::<Vec<_>>();
+        });
 
     (symbols, numbers)
 }
 
 pub(crate) fn is_part_number(number: &Number, symbols: &[Vec<Symbol>], width: usize) -> bool {
-    // Form a box around the number, so column +/- 1.
+    // Form a box around the number, so column +/- 1, except the first or last column.
     let column_range = match number.location.column {
         0 => 0..=number.location.size,
         last_column if last_column == width - 1 => last_column - 1..=last_column,

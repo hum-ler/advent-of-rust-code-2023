@@ -1,10 +1,10 @@
-use super::day_2_part_1::*;
+use crate::day_2_part_1::*;
 
-pub fn run(input: &str) -> u32 {
+pub(crate) fn run(input: &str) -> u32 {
     parse_input(input)
         .iter()
         .map(Game::find_minimum_combo)
-        .map(Combo::power)
+        .map(|combo| combo.power())
         .sum::<u32>()
 }
 
@@ -29,8 +29,7 @@ impl Game {
 }
 
 impl Combo {
-    // Consumes the Combo.
-    fn power(self) -> u32 {
+    fn power(&self) -> u32 {
         self.red * self.green * self.blue
     }
 }
