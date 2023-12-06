@@ -20,7 +20,7 @@ pub(crate) fn run(input: &str) -> u64 {
     parse_input(input)
         .iter()
         .map(|(time, distance)| count_record_beaters(*time, *distance))
-        .fold(1, |acc, count| acc * count)
+        .product()
 }
 
 fn parse_input(input: &str) -> Vec<(u64, u64)> {
@@ -32,12 +32,11 @@ fn parse_input(input: &str) -> Vec<(u64, u64)> {
         panic!("Unexpected input or parsing error");
     }
 
-    let mut tuples = Vec::<(u64, u64)>::new();
-    for index in 0..input_values[0].len() {
-        tuples.push((input_values[0][index], input_values[1][index]));
-    }
-
-    tuples
+    input_values[0]
+        .clone()
+        .into_iter()
+        .zip(input_values[1].clone())
+        .collect()
 }
 
 fn parse_line(input: &str) -> Vec<u64> {
