@@ -1,12 +1,9 @@
 use std::collections::HashSet;
 
-use regex::Regex;
+use crate::clean_lines;
 
-pub fn run(input: &str) -> u32 {
-    input
-        .lines()
-        .map(str::trim)
-        .filter(|token| !token.is_empty())
+pub(crate) fn run(input: &str) -> u32 {
+    clean_lines(input)
         .map(parse_line)
         .map(|card| card.count_points())
         .sum::<u32>()
@@ -37,9 +34,16 @@ impl Card {
 pub(crate) fn parse_line(input: &str) -> Card {
     let (card_part, numbers_part) = input.split_once(':').unwrap();
 
-    let card_regex = Regex::new("Card +(?<id>[0-9]+)").unwrap();
-    let card_captures = card_regex.captures(card_part).unwrap();
-    let id = card_captures["id"].parse::<u32>().unwrap();
+    let id = card_part
+        .split(' ')
+        .map(str::trim)
+        .filter(|token| !token.is_empty())
+        .skip(1)
+        .collect::<Vec<&str>>()
+        .first()
+        .unwrap()
+        .parse::<u32>()
+        .unwrap();
 
     let (winning_numbers_part, picks_part) = numbers_part.split_once('|').unwrap();
     let winning_numbers = parse_numbers(winning_numbers_part);

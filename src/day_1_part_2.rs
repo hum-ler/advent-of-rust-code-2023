@@ -1,8 +1,7 @@
-pub fn run(input: &str) -> u32 {
-    input
-        .lines()
-        .map(str::trim)
-        .filter(|token| !token.is_empty())
+use crate::clean_lines;
+
+pub(crate) fn run(input: &str) -> u32 {
+    clean_lines(input)
         .map(|token| find_calibration_value(token))
         .sum::<u32>()
 }
@@ -14,6 +13,7 @@ fn find_calibration_value(input: &str) -> u32 {
     first_digit * 10 + last_digit
 }
 
+/// Creates a Vec to store the string pattern and its numeric replacement.
 fn digit_patterns() -> Vec<(&'static str, u32)> {
     vec![
         ("1", 1),

@@ -1,19 +1,14 @@
-use super::day_4_part_1::*;
+use crate::{clean_lines, day_4_part_1::*};
 
-pub fn run(input: &str) -> usize {
-    let cards = input
-        .lines()
-        .map(str::trim)
-        .filter(|token| !token.is_empty())
-        .map(parse_line)
-        .collect::<Vec<Card>>();
+pub(crate) fn run(input: &str) -> usize {
+    let cards = clean_lines(input).map(parse_line).collect::<Vec<Card>>();
 
-    let mut card_counter = vec![1; cards.len()];
-
+    let mut card_counter = vec![1; cards.len()]; // store the copies of each card, init to 1.
     for (index, card) in cards.iter().enumerate() {
+        // Get the range of cards that require update.
         let rows_impacted = index + 1..=index + card.count_matching_numbers();
         for row in rows_impacted {
-            card_counter[row] += card_counter[index];
+            card_counter[row] += card_counter[index]; // increase by no of copies of current card
         }
     }
 

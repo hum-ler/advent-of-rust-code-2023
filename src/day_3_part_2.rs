@@ -1,19 +1,12 @@
-use super::day_3_part_1::*;
+use crate::{clean_lines, day_3_part_1::*};
 
-pub fn run(input: &str) -> u32 {
-    let lines = input
-        .lines()
-        .map(str::trim)
-        .filter(|token| !token.is_empty())
-        .collect::<Vec<&str>>();
+pub(crate) fn run(input: &str) -> u32 {
+    let lines = clean_lines(input).collect::<Vec<&str>>();
 
     // Get the dimensions for calculating ranges later.
     let (width, height) = get_size(&lines);
 
-    let (symbols, numbers) = input
-        .lines()
-        .map(str::trim)
-        .filter(|token| !token.is_empty())
+    let (symbols, numbers) = clean_lines(input)
         .enumerate()
         .map(|(index, token)| parse_line(index, token))
         .fold((vec![], vec![]), |mut acc, (symbols, numbers)| {
@@ -37,10 +30,14 @@ pub fn run(input: &str) -> u32 {
             };
 
             let mut adjacent_part_numbers = vec![];
-            for number_vec in &numbers[row_range] {
+            'outer: for number_vec in &numbers[row_range] {
                 for number in number_vec {
                     if symbol.is_adjacent_to(number, width) {
                         adjacent_part_numbers.push(number.clone());
+                    }
+
+                    if adjacent_part_numbers.len() > 2 {
+                        break 'outer;
                     }
                 }
             }
@@ -50,6 +47,7 @@ pub fn run(input: &str) -> u32 {
             }
         }
     }
+
     acc
 }
 

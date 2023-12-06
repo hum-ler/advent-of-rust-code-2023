@@ -13,7 +13,10 @@ mod day_5_part_2;
 
 #[derive(Parser)]
 struct Args {
+    /// Day number, 1 to 25.
     day: u8,
+
+    /// Part 1 or 2.
     part: u8,
 }
 
@@ -34,9 +37,20 @@ fn main() {
     };
 }
 
+/// Wraps around [std::fs::read_to_string].
 pub fn input<P>(path: P) -> String
 where
     P: AsRef<std::path::Path>,
 {
     std::fs::read_to_string(path).unwrap()
+}
+
+/// Splits input into lines.
+///
+/// Also trims, and removes empty lines.
+pub fn clean_lines(input: &str) -> impl Iterator<Item = &str> {
+    input
+        .lines()
+        .map(str::trim)
+        .filter(|token| !token.is_empty())
 }

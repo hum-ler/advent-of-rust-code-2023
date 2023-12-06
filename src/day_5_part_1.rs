@@ -1,16 +1,16 @@
 use std::ops::Range;
 
-pub fn run(input: &str) -> i64 {
+pub(crate) fn run(input: &str) -> i64 {
     let (seeds, map_chain) = parse_input(input);
 
     seeds
         .into_iter()
-        .map(|seed| map_chain.map(Some(seed)))
-        .map(|location| location.unwrap())
+        .map(|seed| map_chain.map(Some(seed)).unwrap())
         .min()
         .unwrap()
 }
 
+/// A series of steps, which step consisting of a bunch of Maps to check.
 #[derive(Debug, Default, PartialEq)]
 pub(crate) struct MapChain<T> {
     chain: Vec<Vec<Map<T>>>,
@@ -25,6 +25,7 @@ impl MapChain<i64> {
         self.chain.push(step);
     }
 
+    /// Runs through all the steps in the chain.
     pub fn map(&self, item: Option<i64>) -> Option<i64> {
         let mut destination = item;
 
@@ -38,6 +39,7 @@ impl MapChain<i64> {
                 .unwrap_or(&None)
                 .to_owned();
 
+            // If no mapping for source is found, the destination remains the same as the source.
             if step_result.is_some() {
                 destination = step_result;
             }
@@ -50,6 +52,8 @@ impl MapChain<i64> {
 #[derive(Debug, PartialEq)]
 struct Map<T> {
     source_range: Range<T>,
+
+    /// The increment / decrement to translate from source to destination.
     translation: T,
 }
 
@@ -83,6 +87,7 @@ pub(crate) fn parse_input(input: &str) -> (Vec<i64>, MapChain<i64>) {
 
     let seeds = parse_seeds(sections[0]);
 
+    // By observation, in the data file, the sections / steps are sequential.
     let mut map_chain = MapChain::new();
     for section in &sections[1..] {
         map_chain.push(parse_step(section));
@@ -96,7 +101,7 @@ fn parse_seeds(input: &str) -> Vec<i64> {
         .split(' ')
         .skip(1)
         .map(str::parse::<i64>)
-        .map(|token| token.unwrap())
+        .map(Result::unwrap)
         .collect::<Vec<i64>>()
 }
 
@@ -114,7 +119,7 @@ fn parse_map(input: &str) -> Map<i64> {
         .map(str::trim)
         .filter(|token| !token.is_empty())
         .map(str::parse::<i64>)
-        .map(|token| token.unwrap())
+        .map(Result::unwrap)
         .collect::<Vec<i64>>();
 
     if triplets.len() != 3 {
