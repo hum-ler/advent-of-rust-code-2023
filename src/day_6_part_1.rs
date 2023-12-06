@@ -1,19 +1,3 @@
-// t: time
-// d: distance
-// b: button time
-//
-// The time t can be divided into 2 parts: t = b + (t - b)
-// The objective is to beat the distance d:
-//         b(t - b) > d
-//     => -b^2 + tb > d
-//
-// Solve for the floor (f) of the smaller b:
-//         b^2 - tb + d = 0.
-//     =>             f = floor((t - sqrt(t^2 - 4d)) / 2)
-//
-// f is the left tail of the distribution that will fail.
-// Accounting for both tails, the number of ways to beat record: t - 2f - 1
-
 use crate::clean_lines;
 
 pub(crate) fn run(input: &str) -> u64 {
@@ -52,6 +36,26 @@ fn parse_line(input: &str) -> Vec<u64> {
 }
 
 pub(crate) fn count_record_beaters(time: u64, distance: u64) -> u64 {
+    // t: time
+    // d: distance
+    // b: button time
+    //
+    // The time t can be divided into 2 parts: t = b + (t - b)
+    // The objective is to beat the distance d:
+    //         b(t - b) > d
+    //     => -b^2 + tb > d
+    //
+    // Solve for the floor (f) of the smaller root b:
+    //         b^2 - tb + d = 0
+    //     =>             f = floor((t - sqrt(t^2 - 4d)) / 2)
+    //
+    // f is (left of) the left tail of the distribution that will fail.
+    // We need to account for:
+    // 1. Both tails => x2
+    // 2. Trials start from 0 => +1
+    // So, the number of ways to beat record:
+    //     (t + 1) - 2(f + 1) = t - 2f - 1
+
     // Convert to floating point for calculations.
     let time = time as f64;
     let distance = distance as f64;
