@@ -1,6 +1,6 @@
 use std::ops::Range;
 
-pub(crate) fn run(input: &str) -> i64 {
+pub fn run(input: &str) -> i64 {
     let (seeds, map_chain) = parse_input(input);
 
     seeds
@@ -26,7 +26,7 @@ impl MapChain<i64> {
     }
 
     /// Runs through all the steps in the chain.
-    pub fn map(&self, item: Option<i64>) -> Option<i64> {
+    pub(crate) fn map(&self, item: Option<i64>) -> Option<i64> {
         let mut destination = item;
 
         for step in &self.chain {

@@ -4,7 +4,7 @@ use rayon::prelude::*;
 
 use std::ops::Range;
 
-pub(crate) fn run(input: &str) -> i64 {
+pub fn run(input: &str) -> i64 {
     let (seeds, map_chain) = parse_input(input);
 
     expand_seeds(seeds)

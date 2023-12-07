@@ -2,7 +2,7 @@ use std::collections::HashSet;
 
 use crate::clean_lines;
 
-pub(crate) fn run(input: &str) -> u32 {
+pub fn run(input: &str) -> u32 {
     clean_lines(input)
         .map(parse_line)
         .map(|card| card.count_points())
@@ -16,7 +16,7 @@ pub(crate) struct Card {
 }
 
 impl Card {
-    pub fn count_matching_numbers(&self) -> usize {
+    pub(crate) fn count_matching_numbers(&self) -> usize {
         self.winning_numbers.intersection(&self.picks).count()
     }
 

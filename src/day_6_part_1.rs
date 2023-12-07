@@ -1,6 +1,6 @@
 use crate::clean_lines;
 
-pub(crate) fn run(input: &str) -> u64 {
+pub fn run(input: &str) -> u64 {
     parse_input(input)
         .iter()
         .map(|(time, distance)| count_record_beaters(*time, *distance))

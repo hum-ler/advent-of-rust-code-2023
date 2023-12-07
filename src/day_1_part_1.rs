@@ -1,6 +1,6 @@
 use crate::clean_lines;
 
-pub(crate) fn run(input: &str) -> u32 {
+pub fn run(input: &str) -> u32 {
     clean_lines(input)
         .map(|token| find_calibration_value(token))
         .sum::<u32>()

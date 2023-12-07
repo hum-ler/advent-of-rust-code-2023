@@ -1,6 +1,6 @@
 use crate::{clean_lines, day_6_part_1::count_record_beaters};
 
-pub(crate) fn run(input: &str) -> u64 {
+pub fn run(input: &str) -> u64 {
     let (time, distance) = parse_input(input);
 
     count_record_beaters(time, distance)
