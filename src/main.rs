@@ -12,6 +12,8 @@ mod day_5_part_1;
 mod day_5_part_2;
 mod day_6_part_1;
 mod day_6_part_2;
+mod day_7_part_1;
+mod day_7_part_2;
 
 #[derive(Parser)]
 struct Args {
@@ -37,6 +39,8 @@ fn main() {
         (5, 2) => println!("{}", day_5_part_2::run(&input("input/day-5.txt"))),
         (6, 1) => println!("{}", day_6_part_1::run(&input("input/day-6.txt"))),
         (6, 2) => println!("{}", day_6_part_2::run(&input("input/day-6.txt"))),
+        (7, 1) => println!("{}", day_7_part_1::run(&input("input/day-7.txt"))),
+        (7, 2) => println!("{}", day_7_part_2::run(&input("input/day-7.txt"))),
         _ => (),
     };
 }
