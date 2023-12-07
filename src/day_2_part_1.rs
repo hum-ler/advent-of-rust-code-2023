@@ -1,6 +1,6 @@
 use crate::clean_lines;
 
-pub(crate) fn run(input: &str) -> u32 {
+pub fn run(input: &str) -> u32 {
     let test = Combo {
         red: 12,
         green: 13,

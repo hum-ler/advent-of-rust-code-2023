@@ -1,6 +1,6 @@
 use crate::{clean_lines, day_3_part_1::*};
 
-pub(crate) fn run(input: &str) -> u32 {
+pub fn run(input: &str) -> u32 {
     let lines = clean_lines(input).collect::<Vec<&str>>();
 
     // Get the dimensions for calculating ranges later.

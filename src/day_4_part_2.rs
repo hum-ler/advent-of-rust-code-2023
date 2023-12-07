@@ -1,6 +1,6 @@
 use crate::{clean_lines, day_4_part_1::*};
 
-pub(crate) fn run(input: &str) -> usize {
+pub fn run(input: &str) -> usize {
     let cards = clean_lines(input).map(parse_line).collect::<Vec<Card>>();
 
     let mut card_counter = vec![1; cards.len()]; // store the copies of each card, init to 1.

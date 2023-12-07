@@ -1,6 +1,6 @@
 use crate::clean_lines;
 
-pub(crate) fn run(input: &str) -> u64 {
+pub fn run(input: &str) -> u64 {
     let mut wagers = clean_lines(input).map(parse_line).collect::<Vec<Wager>>();
     wagers.sort();
 
