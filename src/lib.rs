@@ -16,6 +16,8 @@ mod day_8_part_1;
 mod day_8_part_2;
 mod day_8_part_2_nodes;
 mod day_8_part_2_slices;
+mod day_9_part_1;
+mod day_9_part_2;
 
 /// Splits input into lines.
 ///
@@ -45,3 +47,5 @@ pub use day_8_part_1::run as run_day_8_part_1;
 pub use day_8_part_2::run as run_day_8_part_2;
 pub use day_8_part_2_nodes::run as run_day_8_part_2_nodes;
 pub use day_8_part_2_slices::run as run_day_8_part_2_slices;
+pub use day_9_part_1::run as run_day_9_part_1;
+pub use day_9_part_2::run as run_day_9_part_2;
