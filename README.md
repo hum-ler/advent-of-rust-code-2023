@@ -1,4 +1,4 @@
-# advent-of-code-2023
+# advent-of-rust-code-2023
 
 Practise solving [Advent of Code 2023](https://adventofcode.com/2023) using Rust.
 
@@ -18,7 +18,7 @@ To run the code against the heavier input data, use `cargo run <day> <part>`
 ## Answers
 
 > [!note]
-> Input differs for participants.
+> Input data differs between participants.
 
 | Day | Part 1 | Part 2 |
 |:-:|:-:|:-:|
