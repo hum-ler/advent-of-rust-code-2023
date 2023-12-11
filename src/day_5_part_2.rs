@@ -1,8 +1,8 @@
-use crate::day_5_part_1::*;
+use std::ops::Range;
 
 use rayon::prelude::*;
 
-use std::ops::Range;
+use crate::day_5_part_1::*;
 
 pub fn run(input: &str) -> i64 {
     let (seeds, map_chain) = parse_input(input);
