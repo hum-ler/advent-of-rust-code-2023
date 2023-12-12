@@ -1,5 +1,6 @@
-use advent_of_code_2023::*;
 use clap::Parser;
+
+use advent_of_rust_code_2023::*;
 
 #[derive(Parser)]
 struct Args {
