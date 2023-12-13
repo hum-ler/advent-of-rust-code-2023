@@ -15,6 +15,9 @@ To run the code against the heavier input data, use `cargo run <day> <part>`
 > [!note]
 > I couldn't solve Day 8 Part 2 without looking up the strategy online. The trick is to realize (by inspecting the sequence) that for every case of A node, the mapping always cycles around after the Z node. Once you have the length of the sequences, you can calculate the multiple that is when all the Z nodes coincide.
 
+> [!note]
+> I couldn't solve Day 12 Part 1. Brute forcing takes too long (probably a couple of hours), whether it's converting to stars and bars, or substituting ?s with permutations of remaining #s.
+
 ## Answers
 
 > [!note]
@@ -33,3 +36,4 @@ To run the code against the heavier input data, use `cargo run <day> <part>`
 | 9 | 1696140818 | 1152 |
 | 10 | 6806 | 449 |
 | 11 | 9965032 | 550358864332 |
+| 13 | 30575 | 37478 |
