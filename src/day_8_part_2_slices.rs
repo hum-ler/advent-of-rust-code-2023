@@ -11,7 +11,7 @@ pub fn run(input: &str) -> u64 {
     let mut codes = hash_map
         .keys()
         .filter(|code| code_ends_with_a(code))
-        .map(|code| *code)
+        .copied()
         .collect::<Vec<&str>>();
 
     'outer: loop {
@@ -74,7 +74,7 @@ fn code_ends_with_z(code: &str) -> bool {
     code.ends_with('Z')
 }
 
-fn is_end(codes: &Vec<&str>) -> bool {
+fn is_end(codes: &[&str]) -> bool {
     codes.iter().all(|code| code_ends_with_z(code))
 }
 

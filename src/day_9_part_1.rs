@@ -39,19 +39,22 @@ pub(crate) fn expand_differences(input: Vec<Vec<i64>>) -> Vec<Vec<i64>> {
 }
 
 /// Calculates a new layer from the previous one.
-fn calculate_differences(input: &Vec<i64>) -> Vec<i64> {
+fn calculate_differences(input: &[i64]) -> Vec<i64> {
     input
         .windows(2)
         .map(|window| window[1] - window[0])
         .collect::<Vec<i64>>()
 }
 
-fn is_all_zeroes(input: &Vec<i64>) -> bool {
+fn is_all_zeroes(input: &[i64]) -> bool {
     input.iter().all(|value| *value == 0)
 }
 
 fn extrapolate(input: Vec<Vec<i64>>) -> i64 {
-    let mut last_elements = input.iter().map(|vec| *vec.last().unwrap()).collect::<Vec<i64>>();
+    let mut last_elements = input
+        .iter()
+        .map(|vec| *vec.last().unwrap())
+        .collect::<Vec<i64>>();
 
     last_elements.reverse();
 

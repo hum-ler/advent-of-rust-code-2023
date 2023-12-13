@@ -113,7 +113,6 @@ impl From<&str> for Sequence {
             cards: input
                 .trim()
                 .chars()
-                .into_iter()
                 .map(Card::from)
                 .collect::<Vec<Card>>()
                 .try_into()
@@ -136,7 +135,7 @@ impl PartialEq for Wager {
 
 impl PartialOrd for Wager {
     fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.hand.partial_cmp(&other.hand)
+        Some(self.cmp(other))
     }
 }
 
@@ -144,7 +143,7 @@ impl Eq for Wager {}
 
 impl Ord for Wager {
     fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.partial_cmp(other).unwrap()
+        self.hand.partial_cmp(&other.hand).unwrap()
     }
 }
 

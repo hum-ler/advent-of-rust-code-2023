@@ -35,9 +35,7 @@ pub(crate) struct Combo {
 }
 
 pub(crate) fn parse_input(input: &str) -> Vec<Game> {
-    clean_lines(input)
-        .map(|token| parse_game(token))
-        .collect::<Vec<Game>>()
+    clean_lines(input).map(parse_game).collect::<Vec<Game>>()
 }
 
 fn parse_game(input: &str) -> Game {
@@ -55,7 +53,7 @@ fn parse_game(input: &str) -> Game {
 
     let game_combos = combos_part
         .split(';')
-        .map(|token| parse_combo(token))
+        .map(parse_combo)
         .collect::<Vec<Combo>>();
 
     Game {

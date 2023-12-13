@@ -1,9 +1,7 @@
 use crate::clean_lines;
 
 pub fn run(input: &str) -> u32 {
-    clean_lines(input)
-        .map(|token| find_calibration_value(token))
-        .sum::<u32>()
+    clean_lines(input).map(find_calibration_value).sum::<u32>()
 }
 
 fn find_calibration_value(input: &str) -> u32 {
@@ -38,7 +36,7 @@ fn digit_patterns() -> Vec<(&'static str, u32)> {
 }
 
 fn find_first_digit(input: &str) -> Option<u32> {
-    if input.len() == 0 {
+    if input.is_empty() {
         return None;
     }
 
@@ -52,7 +50,7 @@ fn find_first_digit(input: &str) -> Option<u32> {
 }
 
 fn find_last_digit(input: &str) -> Option<u32> {
-    if input.len() == 0 {
+    if input.is_empty() {
         return None;
     }
 

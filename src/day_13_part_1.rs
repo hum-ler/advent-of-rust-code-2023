@@ -29,11 +29,9 @@ pub(crate) struct Pattern {
 }
 
 impl Pattern {
-    fn rows_into_columns(rows: &Vec<Vec<char>>) -> Vec<Vec<char>> {
+    fn rows_into_columns(rows: &[Vec<char>]) -> Vec<Vec<char>> {
         let mut columns = Vec::<Vec<char>>::new();
-        (0..rows[0].len())
-            .into_iter()
-            .for_each(|_| columns.push(Vec::<char>::new()));
+        (0..rows[0].len()).for_each(|_| columns.push(Vec::<char>::new()));
 
         rows.iter().for_each(|row| {
             row.iter()

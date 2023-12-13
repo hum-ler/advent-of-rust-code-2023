@@ -11,8 +11,7 @@ pub fn run(input: &str) -> usize {
     let galaxies = lines
         .into_iter()
         .enumerate()
-        .map(|(row, line)| parse_line(line, row))
-        .flatten()
+        .flat_map(|(row, line)| parse_line(line, row))
         .collect::<Vec<Galaxy>>();
 
     let galaxies = expand_universe(&galaxies, width, height);
@@ -56,19 +55,19 @@ fn expand_universe(galaxies: &[Galaxy], width: usize, height: usize) -> Vec<Gala
 
 pub(crate) fn find_empty_columns(galaxies: &[Galaxy], width: usize) -> Vec<usize> {
     let unique_columns: HashSet<usize> = HashSet::from_iter(galaxies.iter().map(|galaxy| galaxy.0));
-    let all_columns = HashSet::from_iter((0..width).into_iter());
+    let all_columns = HashSet::from_iter(0..width);
     all_columns
         .difference(&unique_columns)
-        .map(|column| *column)
+        .copied()
         .collect::<Vec<usize>>()
 }
 
 pub(crate) fn find_empty_rows(galaxies: &[Galaxy], height: usize) -> Vec<usize> {
     let unique_rows: HashSet<usize> = HashSet::from_iter(galaxies.iter().map(|galaxy| galaxy.1));
-    let all_rows = HashSet::from_iter((0..height).into_iter());
+    let all_rows = HashSet::from_iter(0..height);
     all_rows
         .difference(&unique_rows)
-        .map(|row| *row)
+        .copied()
         .collect::<Vec<usize>>()
 }
 
