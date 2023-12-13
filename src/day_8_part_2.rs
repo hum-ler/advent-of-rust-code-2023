@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use std::{collections::HashMap, mem::swap};
 
 use crate::clean_lines;
 
@@ -14,7 +14,7 @@ pub fn run(input: &str) -> u64 {
     let codes = hash_map
         .keys()
         .filter(|code| code_ends_with_a(code))
-        .map(|code| *code)
+        .copied()
         .collect::<Vec<&str>>();
 
     let cycle_lengths = codes
@@ -37,10 +37,7 @@ pub fn run(input: &str) -> u64 {
         })
         .collect::<Vec<u64>>();
 
-    cycle_lengths
-        .into_iter()
-        .reduce(|acc, length| lcm(acc, length))
-        .unwrap()
+    cycle_lengths.into_iter().reduce(lcm).unwrap()
 }
 
 fn parse_input(input: &str) -> (Vec<usize>, HashMap<&str, [&str; 2]>) {
@@ -96,9 +93,7 @@ fn gcd(first: u64, second: u64) -> u64 {
     let mut max = first;
     let mut min = second;
     if min > max {
-        let val = max;
-        max = min;
-        min = val;
+        swap(&mut min, &mut max);
     }
 
     loop {

@@ -13,8 +13,7 @@ fn run_with_expansion_size(input: &str, size: usize) -> usize {
     let galaxies = lines
         .into_iter()
         .enumerate()
-        .map(|(row, line)| parse_line(line, row))
-        .flatten()
+        .flat_map(|(row, line)| parse_line(line, row))
         .collect::<Vec<Galaxy>>();
 
     let galaxies = expand_universe(&galaxies, size, width, height);

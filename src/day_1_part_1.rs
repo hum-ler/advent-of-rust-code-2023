@@ -1,9 +1,7 @@
 use crate::clean_lines;
 
 pub fn run(input: &str) -> u32 {
-    clean_lines(input)
-        .map(|token| find_calibration_value(token))
-        .sum::<u32>()
+    clean_lines(input).map(find_calibration_value).sum::<u32>()
 }
 
 fn find_calibration_value(input: &str) -> u32 {

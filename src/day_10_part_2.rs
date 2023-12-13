@@ -79,8 +79,8 @@ fn get_main_loop(start: Coords, hash_map: &mut HashMap<Coords, Tile>) -> Vec<Coo
     main_loop
 }
 
-fn reverse_main_loop(main_loop: &Vec<Coords>) -> Vec<Coords> {
-    let mut reverse = main_loop.clone();
+fn reverse_main_loop(main_loop: &[Coords]) -> Vec<Coords> {
+    let mut reverse = Vec::from(main_loop);
     reverse.reverse();
     let start = reverse.pop().unwrap();
     reverse.insert(0, start);
@@ -171,7 +171,7 @@ fn mark_enclosed(
     coords: Coords,
     direction: Direction,
     hash_map: &mut HashMap<Coords, Tile>,
-    main_loop: &Vec<Coords>,
+    main_loop: &[Coords],
 ) {
     match direction {
         Direction::North => {
