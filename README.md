@@ -13,10 +13,13 @@ To run the code against the heavier input data, use `cargo run <day> <part>`
 > Day 5 Part 2 is slow! Computing the result takes a bit of time. With a release build it takes close to 1 minute to complete on a M2 Max notebook. Same duration on a i7-12700K PC. This is with Rayon parallelism. Without Rayon, it takes around 8 and a half minutes.
 
 > [!note]
-> I couldn't solve Day 8 Part 2 without looking up the strategy online. The trick is to realize (by inspecting the sequence) that for every case of A node, the mapping always cycles around after the Z node. Once you have the length of the sequences, you can calculate the multiple that is when all the Z nodes coincide.
+> I couldn't solve Day 8 Part 2. After looking up the strategy online, the trick is to realize (by inspecting the sequence) that for every case of A node, the mapping always cycles around after the Z node. Once you have the length of the sequences, you can calculate the multiple that is when all the Z nodes coincide.
 
 > [!note]
 > I couldn't solve Day 12 Part 1. Brute forcing takes too long (probably a couple of hours), whether it's converting to stars and bars, or substituting ?s with permutations of remaining #s.
+
+> [!note]
+> I couldn't solve Day 14 Part 2. Running a billion cycles would take too long. Observing the total load value after a few hundred cycles, eventually the number starts looping around in the pattern: (96063, 96064, 96077, 96079, 96078, 96061, 96064). We use the value of 1000000000 mod 7 = 1000 mod 7 = 6 -- run just a thousand cycles here, which turns out to be 96061.
 
 ## Answers
 
@@ -36,4 +39,6 @@ To run the code against the heavier input data, use `cargo run <day> <part>`
 | 9 | 1696140818 | 1152 |
 | 10 | 6806 | 449 |
 | 11 | 9965032 | 550358864332 |
+| 12 | ? | ? |
 | 13 | 30575 | 37478 |
+| 14 | 109665 | 96061 |

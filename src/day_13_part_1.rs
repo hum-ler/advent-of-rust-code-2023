@@ -30,13 +30,15 @@ pub(crate) struct Pattern {
 
 impl Pattern {
     fn rows_into_columns(rows: &[Vec<char>]) -> Vec<Vec<char>> {
-        let mut columns = Vec::<Vec<char>>::new();
-        (0..rows[0].len()).for_each(|_| columns.push(Vec::<char>::new()));
+        let mut columns = rows[0]
+            .iter()
+            .map(|_| Vec::<char>::new())
+            .collect::<Vec<Vec<char>>>();
 
         rows.iter().for_each(|row| {
             row.iter()
                 .enumerate()
-                .for_each(|(index, c)| columns[index].push(*c))
+                .for_each(|(i, c)| columns[i].push(*c))
         });
 
         columns
