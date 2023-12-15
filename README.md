@@ -42,3 +42,4 @@ To run the code against the heavier input data, use `cargo run <day> <part>`
 | 12 | ? | ? |
 | 13 | 30575 | 37478 |
 | 14 | 109665 | 96061 |
+| 15 | 514025 | 244461 |
