@@ -65,6 +65,5 @@ mod tests {
         ";
 
         assert_eq!(run(input), 64);
-        panic!();
     }
 }
