@@ -2,20 +2,19 @@ use crate::{clean_lines, day_15_part_1::hash};
 
 pub fn run(input: &str) -> u64 {
     let mut boxes = Vec::<Vec<Lens>>::with_capacity(256);
-    (0..256).for_each(|_| boxes.push(Vec::<Lens>::new()));
+    (0..256).for_each(|_| boxes.push(vec![]));
 
-    clean_lines(input).take(1).collect::<Vec<&str>>()[0]
+    clean_lines(input).collect::<Vec<&str>>()[0]
         .split(',')
         .for_each(|instruction| execute_instruction(instruction, &mut boxes));
 
     total_focusing_power(&boxes)
 }
 
-fn execute_instruction(instruction: &str, boxes: &mut [Vec<Lens>]) {
-    if instruction.ends_with('-') {
-        execute_remove(instruction.strip_suffix('-').unwrap(), boxes);
-    } else {
-        let (label, number) = instruction.split_once('=').unwrap();
+fn execute_instruction<'a>(instruction: &'a str, boxes: &mut [Vec<Lens<'a>>]) {
+    if let Some(label) = instruction.strip_suffix('-') {
+        execute_remove(label, boxes);
+    } else if let Some((label, number)) = instruction.split_once('=') {
         execute_upsert(label, number.parse::<u8>().unwrap(), boxes);
     }
 }
@@ -23,19 +22,19 @@ fn execute_instruction(instruction: &str, boxes: &mut [Vec<Lens>]) {
 fn execute_remove(label: &str, boxes: &mut [Vec<Lens>]) {
     let b = &mut boxes[hash(label) as usize];
 
-    if let Some(index) = b.iter().position(|lens| label == lens.label.as_str()) {
+    if let Some(index) = b.iter().position(|lens| label == lens.label) {
         b.remove(index);
     }
 }
 
-fn execute_upsert(label: &str, focal_length: u8, boxes: &mut [Vec<Lens>]) {
+fn execute_upsert<'a>(label: &'a str, focal_length: u8, boxes: &mut [Vec<Lens<'a>>]) {
     let lens = Lens {
-        label: String::from(label),
+        label,
         focal_length,
     };
 
     let b = &mut boxes[hash(label) as usize];
-    let existing_index = b.iter().position(|lens| label == lens.label.as_str());
+    let existing_index = b.iter().position(|lens| label == lens.label);
 
     b.push(lens);
 
@@ -62,8 +61,8 @@ fn lens_focusing_power(lens: &Lens, box_no: usize, slot_no: usize) -> u64 {
     (box_no as u64 + 1) * (slot_no as u64 + 1) * lens.focal_length as u64
 }
 
-struct Lens {
-    label: String,
+struct Lens<'a> {
+    label: &'a str,
     focal_length: u8,
 }
 
