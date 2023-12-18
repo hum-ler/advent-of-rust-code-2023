@@ -30,6 +30,9 @@ mod day_15_part_1;
 mod day_15_part_2;
 mod day_16_part_1;
 mod day_16_part_2;
+mod day_17_part_1;
+mod day_17_part_2;
+mod day_17_part_2_array;
 
 /// Splits input into lines.
 ///
@@ -73,3 +76,6 @@ pub use day_15_part_1::run as run_day_15_part_1;
 pub use day_15_part_2::run as run_day_15_part_2;
 pub use day_16_part_1::run as run_day_16_part_1;
 pub use day_16_part_2::run as run_day_16_part_2;
+pub use day_17_part_1::run as run_day_17_part_1;
+pub use day_17_part_2::run as run_day_17_part_2;
+pub use day_17_part_2_array::run as run_day_17_part_2_array;
