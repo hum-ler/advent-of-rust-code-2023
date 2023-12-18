@@ -21,6 +21,9 @@ To run the code against the heavier input data, use `cargo run <day> <part>`
 > [!note]
 > I couldn't solve Day 14 Part 2. Running a billion cycles would take too long. Observing the total load value after a few hundred cycles, eventually the number starts looping around in the pattern: (96063, 96064, 96077, 96079, 96078, 96061, 96064). We use the value of 1000000000 mod 7 = 1000 mod 7 = 6 -- run just a thousand cycles here, which turns out to be 96061.
 
+> [!note]
+> I couldn't solve Day 18 Part 2. Flood filling the interior takes too long. After looking up the strategy online, the shoelace formula seems to be fairly trivial to implement.
+
 ## Answers
 
 > [!note]
@@ -45,3 +48,4 @@ To run the code against the heavier input data, use `cargo run <day> <part>`
 | 15 | 514025 | 244461 |
 | 16 | 7884 | 8185 |
 | 17 | 1023 | 1165 |
+| 18 | 62365 | 159485361249806 |
