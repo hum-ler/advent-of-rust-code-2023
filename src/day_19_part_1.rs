@@ -74,7 +74,7 @@ pub(crate) struct Rule<'a> {
 }
 
 impl<'a> Rule<'a> {
-    fn apply(&self, part: Part) -> Option<&'a str> {
+    fn apply(&self, part: Part) -> Option<&str> {
         match (self.cmp, self.property, self.value) {
             (None, _, _) => return Some(self.outcome),
             (Some(cmp), Some("x"), Some(value)) => {
