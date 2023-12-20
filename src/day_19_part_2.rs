@@ -156,7 +156,7 @@ fn rules_to_tree_node<'a>(
     // Terminate when we encounter a rule with no predicate i.e. the last rule of a workflow.
     if rules[0].cmp.is_none() {
         return Some(Box::new(BinaryTreeNode {
-            value: NodeValue::Rule(path.clone()),
+            value: NodeValue::Rule,
             left: workflow_to_tree_node(rules[0].outcome, path, workflows),
             right: None,
         }));
@@ -168,7 +168,7 @@ fn rules_to_tree_node<'a>(
     false_path.push((rules[0], false));
 
     Some(Box::new(BinaryTreeNode {
-        value: NodeValue::Rule(path.clone()),
+        value: NodeValue::Rule,
         left: workflow_to_tree_node(rules[0].outcome, &true_path, workflows),
         right: rules_to_tree_node(&rules[1..], &false_path, workflows),
     }))
@@ -176,7 +176,7 @@ fn rules_to_tree_node<'a>(
 
 #[derive(PartialEq)]
 enum NodeValue<'a> {
-    Rule(Vec<(Rule<'a>, bool)>),
+    Rule,
     Accept(Vec<(Rule<'a>, bool)>),
     Reject,
 }
