@@ -84,7 +84,7 @@ fn code_ends_with_z(code: &str) -> bool {
 }
 
 // Copied from https://www.hackertouch.com/least-common-multiple-in-rust.html.
-fn lcm(first: u64, second: u64) -> u64 {
+pub(crate) fn lcm(first: u64, second: u64) -> u64 {
     first * second / gcd(first, second)
 }
 
