@@ -10,6 +10,7 @@ dependencies = [
  "itertools",
  "pathfinding",
  "rayon",
+ "tree_iterators_rs",
 ]
 
 [[package]]
@@ -311,6 +312,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "836fa6a3e1e547f9a2c4040802ec865b5d85f4014efe00555d7090a3dcaa1090"
 
 [[package]]
+name = "streaming-iterator"
+version = "0.1.9"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2b2231b7c3057d5e4ad0156fb3dc807d900806020c5ffa3ee6ff2c8c76fb8520"
+
+[[package]]
 name = "strsim"
 version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -345,6 +352,15 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "tree_iterators_rs"
+version = "1.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "66e8dfbe5593eef056722626dbfd4969f3c509190783be0647d45167eced6eca"
+dependencies = [
+ "streaming-iterator",
 ]
 
 [[package]]
