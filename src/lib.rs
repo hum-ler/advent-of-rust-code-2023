@@ -38,6 +38,8 @@ mod day_18_part_1_flood_exterior;
 mod day_18_part_2;
 mod day_19_part_1;
 mod day_19_part_2;
+mod day_20_part_1;
+mod day_20_part_2;
 
 /// Splits input into lines.
 ///
@@ -89,3 +91,5 @@ pub use day_18_part_1::run as run_day_18_part_1;
 pub use day_18_part_2::run as run_day_18_part_2;
 pub use day_19_part_1::run as run_day_19_part_1;
 pub use day_19_part_2::run as run_day_19_part_2;
+pub use day_20_part_1::run as run_day_20_part_1;
+pub use day_20_part_2::run as run_day_20_part_2;
