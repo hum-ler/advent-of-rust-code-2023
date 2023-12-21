@@ -1,4 +1,6 @@
-use std::{collections::HashMap, mem::swap};
+use std::collections::HashMap;
+
+use num_integer::lcm;
 
 use crate::clean_lines;
 
@@ -81,30 +83,6 @@ fn code_ends_with_a(code: &str) -> bool {
 
 fn code_ends_with_z(code: &str) -> bool {
     code.ends_with('Z')
-}
-
-// Copied from https://www.hackertouch.com/least-common-multiple-in-rust.html.
-pub(crate) fn lcm(first: u64, second: u64) -> u64 {
-    first * second / gcd(first, second)
-}
-
-// Copied from https://www.hackertouch.com/least-common-multiple-in-rust.html.
-fn gcd(first: u64, second: u64) -> u64 {
-    let mut max = first;
-    let mut min = second;
-    if min > max {
-        swap(&mut min, &mut max);
-    }
-
-    loop {
-        let res = max % min;
-        if res == 0 {
-            return min;
-        }
-
-        max = min;
-        min = res;
-    }
 }
 
 #[cfg(test)]

@@ -5,7 +5,9 @@
 
 use std::collections::{HashMap, VecDeque};
 
-use crate::{day_20_part_1::*, day_8_part_2::lcm};
+use num_integer::lcm;
+
+use crate::day_20_part_1::*;
 
 pub fn run(input: &str) -> u64 {
     let modules_at_start = parse_input(input);
