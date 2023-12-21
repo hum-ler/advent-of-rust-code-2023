@@ -62,12 +62,11 @@ fn button_press<'a>(modules: &mut HashMap<&'a str, Module<'a>>) -> (usize, usize
     while !signals.is_empty() {
         let signal = signals.pop_front().unwrap();
 
-        let (updated_module, mut outputs) = modules
+        let mut outputs = modules
             .get(signal.successor)
             .unwrap()
             .clone()
-            .process_pulse(signal);
-        modules.insert(updated_module.name, updated_module);
+            .process_pulse(signal, modules);
 
         let count = outputs.len();
         if count > 0 {
@@ -92,7 +91,7 @@ pub(crate) fn parse_input(input: &str) -> HashMap<&str, Module> {
         modules.insert(module.name, module);
     });
 
-    // Post-processing, update the chaining.
+    // Post-processing, update the conjunction inputs, and create any unknown modules.
     for module in modules.clone().values() {
         for output in &module.outputs {
             if let Some(successor) = modules.get(output) {
@@ -150,8 +149,12 @@ pub(crate) struct Module<'a> {
 impl<'a> Module<'a> {
     /// Processes a signal from a predecessor.
     ///
-    /// Returns an updated copy of oneself, and a list of Signals to send out to successors.
-    pub(crate) fn process_pulse(mut self, input: Signal<'a>) -> (Self, VecDeque<Signal<'a>>) {
+    /// Updates oneself in modules, and returns a list of Signals to send out to successors.
+    pub(crate) fn process_pulse(
+        mut self,
+        input: Signal<'a>,
+        modules: &mut HashMap<&'a str, Module<'a>>,
+    ) -> VecDeque<Signal<'a>> {
         let mut outputs = VecDeque::new();
 
         if let ModuleType::FlipFlop { state } = self.module_type {
@@ -199,7 +202,9 @@ impl<'a> Module<'a> {
                 .collect();
         }
 
-        (self, outputs)
+        modules.insert(self.name, self);
+
+        outputs
     }
 }
 

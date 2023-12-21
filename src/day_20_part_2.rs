@@ -85,14 +85,13 @@ fn button_press<'a>(modules: &mut HashMap<&'a str, Module<'a>>, condition: Signa
             condition_met = true;
         }
 
-        let (updated_module, mut outputs) = modules
-            .get(signal.successor)
-            .unwrap()
-            .clone()
-            .process_pulse(signal);
-        modules.insert(updated_module.name, updated_module);
-
-        signals.append(&mut outputs);
+        signals.append(
+            &mut modules
+                .get(signal.successor)
+                .unwrap()
+                .clone()
+                .process_pulse(signal, modules),
+        );
     }
 
     condition_met
