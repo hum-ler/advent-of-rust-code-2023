@@ -24,6 +24,9 @@ To run the code against the heavier input data, use `cargo run <day> <part>`
 > [!note]
 > I couldn't solve Day 18 Part 2. Flood filling the interior takes too long. After looking up the strategy online, the shoelace formula seems to be fairly trivial to implement.
 
+> [!note]
+> I couldn't solve Day 21 Part 2. It obviously isn't meant to be brute-forced, and it seems to have misleading examples too, like Day 20. Of significance is the fact that S is at the center of the map; vertically and horizontally, there is a clear line of ground from S to the edge => each step will always extend outwards the edge. Also, the objective number of steps will bring you nicely to the edge of the extended map, meaning the end is equivalent to a starting point at the opposite edge, with number of steps required = the width/height of the map.
+
 ## Answers
 
 > [!note]
@@ -51,3 +54,4 @@ To run the code against the heavier input data, use `cargo run <day> <part>`
 | 18 | 62365 | 159485361249806 |
 | 19 | 421983 | 129249871135292 |
 | 20 | 856482136 | 224046542165867 |
+| 21 | 3820 | ? |
