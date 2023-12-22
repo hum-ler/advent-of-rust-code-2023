@@ -44,6 +44,8 @@ mod day_20_part_1;
 mod day_20_part_2;
 mod day_21_part_1;
 mod day_21_part_2_modulus;
+mod day_22_part_1;
+mod day_22_part_2;
 
 /// Splits input into lines.
 ///
@@ -101,3 +103,5 @@ pub use day_20_part_1::run as run_day_20_part_1;
 pub use day_20_part_2::run as run_day_20_part_2;
 pub use day_21_part_1::run as run_day_21_part_1;
 pub use day_21_part_2_modulus::run as run_day_21_part_2_modulus;
+pub use day_22_part_1::run as run_day_22_part_1;
+pub use day_22_part_2::run as run_day_22_part_2;
