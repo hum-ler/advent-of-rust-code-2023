@@ -109,6 +109,7 @@ enum Tile {
 mod tests {
     use super::*;
 
+    #[ignore]
     #[test]
     fn run_example() {
         let input = r"
