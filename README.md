@@ -39,3 +39,4 @@ To run the code against the input data, use `cargo run <day> <part>`
 | 21 | 3820 | ? |
 | 22 | 386 | 39933 |
 | 23 | 2050 | ? |
+| 24 | 16050 | ? |
