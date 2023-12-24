@@ -37,7 +37,6 @@ fn main() {
         (11, 1) => println!("{}", run_day_11_part_1(&input("input/day-11.txt"))),
         (11, 2) => println!("{}", run_day_11_part_2(&input("input/day-11.txt"))),
         (12, 1) => println!("{}", run_day_12_part_1(&input("input/day-12.txt"))),
-        (12, 2) => println!("{}", run_day_12_part_2(&input("input/day-12.txt"))),
         (13, 1) => println!("{}", run_day_13_part_1(&input("input/day-13.txt"))),
         (13, 2) => println!("{}", run_day_13_part_2(&input("input/day-13.txt"))),
         (14, 1) => println!("{}", run_day_14_part_1(&input("input/day-14.txt"))),
@@ -57,6 +56,7 @@ fn main() {
         (21, 1) => println!("{}", run_day_21_part_1(&input("input/day-21.txt"))),
         (22, 1) => println!("{}", run_day_22_part_1(&input("input/day-22.txt"))),
         (22, 2) => println!("{}", run_day_22_part_2(&input("input/day-22.txt"))),
+        (23, 1) => println!("{}", run_day_23_part_1(&input("input/day-23.txt"))),
         _ => (),
     };
 }
