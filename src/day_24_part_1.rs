@@ -1,18 +1,15 @@
-// If point at t0 is (x0, y0) and delta x = dx, delta y = dy, equation of the line is:
-//         m =  dy / dx
-//    y - y0 = m(x - x0)
-// =>      y = mx + y0 - mx0 where x > x0 if dx > 0,
-//                                 x < x0 if dx < 0,
-//                                 y > y0 if dy > 0,
-//                                 y < y0 if dy < 0
-//
-// Equating 2 lines:
-//    m0x + y0 - m0x0 = m1x + y1 - m1x1
-// =>               x = (y1 - y0 + m0x0 - m1x1) / (m0 - m1)
+// The position of a hailstone at time t_n can be described as: p_0 + t_n * v
+// =>                                   x = p_0x + t_n * vx,
+//                                      y = p_0y + t_n * vy
+// =>                                   x = p_0x + ((y - p_0y) * vx) / vy
+// =>                        vy(x - p_0x) = vx(y - p_0y)
+// => vy(x) - vy(p_0x) - vx(y) + vx(p_0y) = 0
+// =>                       vy(x) - vx(y) = vy(p_0x) - vx(p_0y)
 
 use std::{ops::Range, str::FromStr};
 
 use itertools::Itertools;
+use nalgebra::{matrix, Vector4};
 
 use crate::clean_lines;
 
@@ -33,59 +30,44 @@ fn run_test_area(input: &str, test_area: Range<f64>) -> usize {
 }
 
 fn intersect(h1: &Hailstone, h2: &Hailstone, test_area: &Range<f64>) -> bool {
-    let m1 = h1.m.1 / h1.m.0;
-    let m2 = h2.m.1 / h2.m.0;
+    let a = matrix![h1.w, -h1.z;
+                    h2.w, -h2.z];
+    let b = matrix![h1.w * h1.x - h1.z * h1.y;
+                    h2.w * h2.x - h2.z * h2.y];
 
-    if m1 == m2 { // float comparison!
-        return false;
+    if let Some(x) = a.lu().solve(&b) {
+        let t_n1 = (x.x - h1.x) / h1.z;
+        let t_n2 = (x.x - h2.x) / h2.z;
+
+        return t_n1 > 0.0 && t_n2 > 0.0 && test_area.contains(&x.x) && test_area.contains(&x.y);
     }
 
-    let x = (h1.p0.1 - h2.p0.1 + m2 * h2.p0.0 - m1 * h1.p0.0) / (m2 - m1);
-    let y = m1 * x + h1.p0.1 - m1 * h1.p0.0;
-
-    // Check the collision happens after t0.
-    // We can check just x because the hailstone travels in a straight line.
-    if (h1.m.0 > 0.0 && x < h1.p0.0)
-        || (h1.m.0 < 0.0 && x > h1.p0.0)
-        || (h2.m.0 > 0.0 && x < h2.p0.0)
-        || (h2.m.0 < 0.0 && x > h2.p0.0)
-    {
-        return false;
-    }
-
-    test_area.contains(&x) && test_area.contains(&y)
+    false
 }
 
 fn parse_line(input: &str) -> Hailstone {
-    let (p0_part, m_part) = input.split_once(" @ ").unwrap();
+    let (p_0_part, v_part) = input.split_once(" @ ").unwrap();
 
-    let p0_components = p0_part
+    let mut components = p_0_part
         .split(", ")
         .take(2)
         .map(str::trim)
         .map(f64::from_str)
         .map(Result::unwrap)
         .collect::<Vec<f64>>();
-    let m_components = m_part
+    let v_components = v_part
         .split(", ")
         .take(2)
         .map(str::trim)
         .map(f64::from_str)
         .map(Result::unwrap)
         .collect::<Vec<f64>>();
+    components.extend(v_components);
 
-    Hailstone {
-        p0: (p0_components[0], p0_components[1]),
-        m: (m_components[0], m_components[1]),
-    }
+    Vector4::from_row_slice(&components[..])
 }
 
-type Coords = (f64, f64);
-
-struct Hailstone {
-    p0: Coords,
-    m: Coords,
-}
+type Hailstone = Vector4<f64>;
 
 #[cfg(test)]
 mod tests {
