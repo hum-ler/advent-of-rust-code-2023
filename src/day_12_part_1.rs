@@ -1,3 +1,5 @@
+use std::cmp::Ordering;
+
 use crate::clean_lines;
 
 pub fn run(input: &str) -> usize {
@@ -13,14 +15,14 @@ fn optimize_pattern<'a, 'b>(
 ) -> Option<(&'a [char], &'b [usize])> {
     let mut pattern_left_cutoff = 0;
     let mut counts_left_cutoff = 0;
-    let mut pattern_right_cutoff = pattern.len() - 1;
-    let mut counts_right_cutoff = counts.len() - 1;
+    let mut pattern_right_cutoff = pattern.len();
+    let mut counts_right_cutoff = counts.len();
 
     // Consume as much as possible from lhs.
     let mut pattern_pointer = 0;
     let mut consecutive_damaged = 0;
     loop {
-        if pattern_pointer > pattern_right_cutoff || counts_left_cutoff > counts_right_cutoff {
+        if pattern_pointer == pattern_right_cutoff || counts_left_cutoff == counts_right_cutoff {
             break;
         }
 
@@ -28,11 +30,7 @@ fn optimize_pattern<'a, 'b>(
             '#' => {
                 consecutive_damaged += 1;
 
-                if let Some(&count) = counts.get(counts_left_cutoff) {
-                    if consecutive_damaged > count {
-                        return None;
-                    }
-                } else {
+                if consecutive_damaged > counts[counts_left_cutoff] {
                     return None;
                 }
             }
@@ -50,34 +48,24 @@ fn optimize_pattern<'a, 'b>(
             }
             '?' => {
                 if consecutive_damaged > 0 {
-                    if let Some(&count) = counts.get(counts_left_cutoff) {
-                        if consecutive_damaged > count {
-                            return None;
-                        }
-
-                        if consecutive_damaged == count {
+                    match consecutive_damaged.cmp(&counts[counts_left_cutoff]) {
+                        Ordering::Greater => return None,
+                        Ordering::Equal => {
                             // Can only be .
                             counts_left_cutoff += 1;
                             consecutive_damaged = 0;
 
                             pattern_left_cutoff = pattern_pointer + 1;
                         }
-
-                        if consecutive_damaged < count {
+                        Ordering::Less => {
                             // Can only be #
                             consecutive_damaged += 1;
-
-                            if consecutive_damaged > count {
-                                return None;
-                            }
                         }
-                    } else {
-                        return None;
                     }
+                } else {
+                    // Cannot tell.
+                    break;
                 }
-
-                // Cannot tell.
-                break;
             }
             _ => unreachable!(),
         }
@@ -86,10 +74,10 @@ fn optimize_pattern<'a, 'b>(
     }
 
     // Consume as much as possible from rhs.
-    let mut pattern_pointer = pattern_right_cutoff;
+    let mut pattern_pointer = pattern_right_cutoff - 1;
     let mut consecutive_damaged = 0;
     loop {
-        if pattern_pointer < pattern_left_cutoff || counts_right_cutoff < counts_left_cutoff {
+        if pattern_pointer <= pattern_left_cutoff || counts_right_cutoff == counts_left_cutoff {
             break;
         }
 
@@ -97,17 +85,13 @@ fn optimize_pattern<'a, 'b>(
             '#' => {
                 consecutive_damaged += 1;
 
-                if let Some(&count) = counts.get(counts_right_cutoff) {
-                    if consecutive_damaged > count {
-                        return None;
-                    }
-                } else {
+                if consecutive_damaged > counts[counts_right_cutoff - 1] {
                     return None;
                 }
             }
             '.' => {
                 if consecutive_damaged > 0 {
-                    if consecutive_damaged != counts[counts_right_cutoff] {
+                    if consecutive_damaged != counts[counts_right_cutoff - 1] {
                         return None;
                     }
 
@@ -115,38 +99,28 @@ fn optimize_pattern<'a, 'b>(
                     consecutive_damaged = 0;
                 }
 
-                pattern_right_cutoff = pattern_pointer - 1;
+                pattern_right_cutoff = pattern_pointer;
             }
             '?' => {
                 if consecutive_damaged > 0 {
-                    if let Some(&count) = counts.get(counts_right_cutoff) {
-                        if consecutive_damaged > count {
-                            return None;
-                        }
-
-                        if consecutive_damaged == count {
+                    match consecutive_damaged.cmp(&counts[counts_right_cutoff - 1]) {
+                        Ordering::Greater => return None,
+                        Ordering::Equal => {
                             // Can only be .
                             counts_right_cutoff -= 1;
                             consecutive_damaged = 0;
 
-                            pattern_right_cutoff = pattern_pointer - 1;
+                            pattern_right_cutoff = pattern_pointer;
                         }
-
-                        if consecutive_damaged < count {
+                        Ordering::Less => {
                             // Can only be #
                             consecutive_damaged += 1;
-
-                            if consecutive_damaged > count {
-                                return None;
-                            }
                         }
-                    } else {
-                        return None;
                     }
+                } else {
+                    // Cannot tell.
+                    break;
                 }
-
-                // Cannot tell.
-                break;
             }
             _ => unreachable!(),
         }
@@ -160,8 +134,8 @@ fn optimize_pattern<'a, 'b>(
 
     // Quick check for pattern length.
     if counts_left_cutoff < counts_right_cutoff
-        && pattern_right_cutoff + 1 - pattern_left_cutoff
-            < counts[counts_left_cutoff..=counts_right_cutoff]
+        && pattern_right_cutoff - pattern_left_cutoff
+            < counts[counts_left_cutoff..counts_right_cutoff]
                 .iter()
                 .copied()
                 .reduce(|acc, c| acc + 1 + c)
@@ -171,8 +145,8 @@ fn optimize_pattern<'a, 'b>(
     }
 
     Some((
-        &pattern[pattern_left_cutoff..=pattern_right_cutoff],
-        &counts[counts_left_cutoff..=counts_right_cutoff],
+        &pattern[pattern_left_cutoff..pattern_right_cutoff],
+        &counts[counts_left_cutoff..counts_right_cutoff],
     ))
 }
 
