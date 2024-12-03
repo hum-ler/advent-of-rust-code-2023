@@ -1,9 +1,6 @@
 # advent-of-rust-code-2023
 
-Practise solving [Advent of Code 2023](https://adventofcode.com/2023) using Rust.
-
-> [!warning]
-> This is a quick hack -- input is never checked, unwrap() everywhere -- code will panic from any error.
+## Usage
 
 To run the code against the examples, use `cargo test run_example`
 
@@ -11,11 +8,8 @@ To run the code against the input data, use `cargo run <day> <part>`
 
 ## Answers
 
-> [!note]
-> Input data will differ between participants. ? below indicates puzzles that I cannot solve.
-
 | Day | Part 1 | Part 2 |
-|:-:|:-:|:-:|
+| :- | :- | :- |
 | 1 | 55816 | 54980 |
 | 2 | 2101 | 58269 |
 | 3 | 546312 | 87449461 |
