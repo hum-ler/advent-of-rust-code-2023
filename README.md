@@ -4,7 +4,9 @@
 
 To run the code against the examples, use `cargo test run_example`
 
-To run the code against the input data, use `cargo run <day> <part>`
+To run the code against the input data:
+1. Save the data as the file `input/day-<day>.txt`
+2. Run `cargo run <day> <part>`
 
 ## Answers
 
