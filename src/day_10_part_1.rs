@@ -117,6 +117,7 @@ fn get_start_exit(start: Coords, hash_map: &mut HashMap<Coords, Tile>) -> Coords
 /// Moves from one tile to the next.
 /// - current -- the current tile we are going to exit from.
 /// - from -- the previous tile from which we entered the current tile.
+///
 /// Returns the coords of the tile we are exiting into.
 ///
 /// from -> current -> into

@@ -13,8 +13,8 @@ pub fn run(input: &str) -> usize {
     let mut seed = (0, 0);
     'outer: for y in bounding_box.top_left.1 + 1..bounding_box.bottom_right.1 {
         for x in bounding_box.top_left.0..bounding_box.bottom_right.0 - 1 {
-            if holes.get(&(x, y)).is_some() {
-                if holes.get(&(x + 1, y)).is_none() {
+            if holes.contains(&(x, y)) {
+                if !holes.contains(&(x + 1, y)) {
                     seed = (x + 1, y);
                     break 'outer;
                 } else {

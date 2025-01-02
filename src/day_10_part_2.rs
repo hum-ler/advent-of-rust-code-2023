@@ -90,7 +90,7 @@ fn reverse_main_loop(main_loop: &[Coords]) -> Vec<Coords> {
 
 fn should_reverse_loop(
     start: Coords,
-    main_loop: &Vec<Coords>,
+    main_loop: &[Coords],
     hash_map: &mut HashMap<Coords, Tile>,
 ) -> bool {
     let row = start.1;
@@ -130,7 +130,7 @@ fn should_reverse_loop(
 
 /// Deduces the enter and exit directions for each pipe inside main_loop.
 /// Returns the list of (enter_direction, exit_direction) tuples.
-fn get_directions(main_loop: &Vec<Coords>) -> Vec<(Direction, Direction)> {
+fn get_directions(main_loop: &[Coords]) -> Vec<(Direction, Direction)> {
     let mut enter_directions = main_loop
         .windows(2)
         .map(|window| get_direction(window[0], window[1]))
@@ -329,6 +329,7 @@ fn get_start_exit(start: Coords, hash_map: &mut HashMap<Coords, Tile>) -> Coords
 /// Moves from one tile to the next.
 /// - current -- the current tile we are going to exit from.
 /// - from -- the previous tile from which we entered the current tile.
+///
 /// Returns the coords of the tile we are exiting into.
 ///
 /// from -> current -> into

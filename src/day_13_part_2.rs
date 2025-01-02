@@ -84,7 +84,7 @@ impl Pattern {
         Self::find_all_reflections(&self.rows)
     }
 
-    fn find_all_reflections(input: &Vec<Vec<char>>) -> Vec<Option<usize>> {
+    fn find_all_reflections(input: &[Vec<char>]) -> Vec<Option<usize>> {
         // Note that the Option is only for convenience -- the Vec will either be empty, or be
         // containing only Somes, never Nones.
 

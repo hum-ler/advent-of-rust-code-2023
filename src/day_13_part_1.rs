@@ -44,7 +44,7 @@ impl Pattern {
         columns
     }
 
-    fn find_reflection(input: &Vec<Vec<char>>) -> Option<usize> {
+    fn find_reflection(input: &[Vec<char>]) -> Option<usize> {
         // Assumption: input has 0 or 1 reflection.
 
         let length = input.len();

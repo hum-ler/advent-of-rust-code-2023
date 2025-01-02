@@ -40,7 +40,7 @@ pub(crate) struct Workflow<'a> {
     pub(crate) rules: Vec<Rule<'a>>,
 }
 
-impl<'a> Workflow<'a> {
+impl Workflow<'_> {
     fn apply(&self, part: Part) -> &str {
         for rule in &self.rules {
             if let Some(output) = rule.apply(part) {
@@ -73,7 +73,7 @@ pub(crate) struct Rule<'a> {
     pub(crate) outcome: &'a str,
 }
 
-impl<'a> Rule<'a> {
+impl Rule<'_> {
     fn apply(&self, part: Part) -> Option<&str> {
         match (self.cmp, self.property, self.value) {
             (None, _, _) => return Some(self.outcome),
