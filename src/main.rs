@@ -59,6 +59,7 @@ fn main() {
         (22, 1) => println!("{}", run_day_22_part_1(&input("input/day-22.txt"))),
         (22, 2) => println!("{}", run_day_22_part_2(&input("input/day-22.txt"))),
         (23, 1) => println!("{}", run_day_23_part_1(&input("input/day-23.txt"))),
+        (23, 2) => println!("{}", run_day_23_part_2(&input("input/day-23.txt"))),
         (24, 1) => println!("{}", run_day_24_part_1(&input("input/day-24.txt"))),
         _ => (),
     };
