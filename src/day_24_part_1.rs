@@ -9,7 +9,7 @@
 use std::{ops::Range, str::FromStr};
 
 use itertools::Itertools;
-use nalgebra::{matrix, Vector4};
+use nalgebra::{matrix, vector, Vector4};
 
 use crate::clean_lines;
 
@@ -32,8 +32,7 @@ fn run_test_area(input: &str, test_area: Range<f64>) -> usize {
 fn intersect(h1: &Hailstone, h2: &Hailstone, test_area: &Range<f64>) -> bool {
     let a = matrix![h1.w, -h1.z;
                     h2.w, -h2.z];
-    let b = matrix![h1.w * h1.x - h1.z * h1.y;
-                    h2.w * h2.x - h2.z * h2.y];
+    let b = vector![h1.w * h1.x - h1.z * h1.y, h2.w * h2.x - h2.z * h2.y];
 
     if let Some(x) = a.lu().solve(&b) {
         let t_n1 = (x.x - h1.x) / h1.z;
